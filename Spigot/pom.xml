@@ -32,6 +32,7 @@
 							<pattern>org.bstats</pattern>
 							<shadedPattern>net.goldtreeservers.worldguardextraflags.bstats</shadedPattern>
 						</relocation>
+						z
 					</relocations>
 					<filters>
 						<filter>

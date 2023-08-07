@@ -23,7 +23,6 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.Potion;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.spigotmc.event.player.PlayerSpawnLocationEvent;
 
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
@@ -150,26 +149,12 @@ public class PlayerListener implements Listener
 			Boolean value = wgSession.getHandler(FlyFlagHandler.class).getCurrentValue();
 			if (value != null)
 			{
-				new BukkitRunnable()
-				{
-					@Override
-					public void run()
-					{
-						PlayerListener.this.checkFlyStatus(player);
-					}
-				}.runTask(WorldGuardExtraFlagsPlugin.getPlugin());
+				WorldGuardUtils.getScheduler().getImpl().runAtEntity(player, () -> checkFlyStatus(player));
 			}
 		}
 		else
 		{
-			new BukkitRunnable()
-			{
-				@Override
-				public void run()
-				{
-					PlayerListener.this.checkFlyStatus(player);
-				}
-			}.runTask(WorldGuardExtraFlagsPlugin.getPlugin());
+			WorldGuardUtils.getScheduler().getImpl().runAtEntity(player, () -> checkFlyStatus(player));
 		}
 	}
 	
