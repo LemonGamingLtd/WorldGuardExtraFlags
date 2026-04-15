@@ -79,8 +79,6 @@ public class FlyFlagHandler extends FlagValueChangeHandler<State> {
 					if (this.originalFly != null) {
 						bukkitPlayer.setAllowFlight(this.originalFly);
 						this.originalFly = null;
-					} else {
-						bukkitPlayer.setAllowFlight(false);
 					}
 					this.currentValue = null;
 				}
