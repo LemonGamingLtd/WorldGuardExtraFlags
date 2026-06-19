@@ -9,8 +9,6 @@ import com.sk89q.worldedit.util.Location;
 import com.sk89q.worldedit.world.World;
 import com.sk89q.worldguard.LocalPlayer;
 import com.sk89q.worldguard.session.handler.Handler;
-import net.goldtreeservers.worldguardextraflags.wg.WorldGuardUtils;
-import org.bukkit.Bukkit;
 
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
@@ -73,16 +71,16 @@ public class ConsoleCommandOnExitFlagHandler extends Handler
 
 		if (!this.getSession().getManager().hasBypass(player, (World) to.getExtent()))
 		{
-			for (Set<String> commands_ : lastCommands)
-			{
-				if (!commands.contains(commands_))
+				for (Set<String> commands_ : lastCommands)
 				{
-					for (String command : commands_) {
-						WorldGuardUtils.getScheduler().getScheduler().runNextTick(wrappedTask -> Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), command.substring(1).replace("%username%", player.getName()))); //TODO: Make this better)
-					}
+					if (!commands.contains(commands_))
+					{
+						for (String command : commands_) {
+							CommandDispatchUtil.dispatchForPlayer(player, command, true);
+						}
 
-					break;
-				}
+						break;
+					}
 			}
 		}
 		
